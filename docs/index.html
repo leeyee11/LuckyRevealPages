@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>玲珑小六壬 · LuckyReveal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: radial-gradient(circle at 10% 20%, #0ea5e9 0%, transparent 22%), radial-gradient(circle at 90% 10%, #22c55e 0%, transparent 20%), radial-gradient(circle at 80% 80%, #f59e0b 0%, transparent 24%), #0b1224;
+      --card: rgba(255, 255, 255, 0.08);
+      --glass: rgba(255, 255, 255, 0.12);
+      --border: rgba(255, 255, 255, 0.12);
+      --text: #e5eaf5;
+      --muted: #99a8c1;
+      --accent: #22c55e;
+      --accent-2: #0ea5e9;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Space Grotesk', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    header {
+      padding: 26px 24px 12px;
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #22c55e 0%, #0ea5e9 55%, #0b1224 100%);
+      box-shadow: 0 12px 30px rgba(14, 165, 233, 0.4);
+    }
+    nav {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      padding: 8px 12px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      transition: all 0.2s ease;
+    }
+    nav a:hover {
+      border-color: var(--border);
+      background: var(--glass);
+    }
+    .hero {
+      max-width: 1120px;
+      margin: 10px auto 40px;
+      padding: 0 24px 48px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      align-items: center;
+    }
+    h1 {
+      font-size: clamp(34px, 6vw, 54px);
+      margin: 0 0 12px;
+      letter-spacing: -0.6px;
+    }
+    .lead {
+      color: var(--muted);
+      max-width: 620px;
+      margin-bottom: 22px;
+    }
+    .cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      color: var(--text);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      background: var(--glass);
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn.primary {
+      background: linear-gradient(120deg, #22c55e, #0ee9da);
+      border: none;
+      box-shadow: 0 16px 36px rgba(14, 165, 233, 0.32);
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .phone {
+      position: relative;
+      width: min(380px, 100%);
+      aspect-ratio: 9 / 16;
+      margin: 0 auto;
+      border-radius: 30px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(11, 18, 36, 0.9), rgba(11, 18, 36, 0.4));
+      box-shadow: var(--shadow);
+    }
+    .phone::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 35%, rgba(34, 197, 94, 0.2), transparent 50%), radial-gradient(circle at 65% 70%, rgba(14, 165, 233, 0.25), transparent 45%);
+      animation: glow 8s ease-in-out infinite;
+    }
+    @keyframes glow {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.85; }
+    }
+    .phone-content {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+      color: #e0f2fe;
+    }
+    .breathe {
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #22c55e 0%, #59ffc2 100%);
+      filter: drop-shadow(0 12px 36px rgba(14, 165, 233, 0.5));
+      display: grid;
+      place-items: center;
+      position: relative;
+      animation: breathe 5s ease-in-out infinite;
+    }
+    .breathe::after {
+      content: "按住 3 秒 · 静心起卦";
+      color: #e2e8f0;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    @keyframes breathe {
+      0%, 100% { transform: scale(0.93); box-shadow: 0 0 70px rgba(34, 197, 94, 0.25); }
+      50% { transform: scale(1.05); box-shadow: 0 0 90px rgba(14, 165, 233, 0.35); }
+    }
+    .section {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px 52px;
+    }
+    .section h2 {
+      font-size: 26px;
+      margin-bottom: 16px;
+      letter-spacing: -0.2px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 3;
+      gap: 16px;
+    }
+    .card {
+      grid-column: span 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+    .list {
+      padding-left: 18px;
+      color: var(--muted);
+      margin: 8px 0 0;
+    }
+    .list li { margin: 4px 0; }
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+    .timeline-item {
+      border-left: 2px solid var(--accent);
+      padding-left: 12px;
+      color: var(--muted);
+    }
+    footer {
+      padding: 28px 24px 48px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    @media (max-width: 720px) {
+      header { flex-direction: column; align-items: flex-start; }
+      nav { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <span>玲珑小六壬 · LuckyReveal</span>
+    </div>
+    <nav>
+      <a href="#features">功能亮点</a>
+      <a href="#flow">起卦流程</a>
+      <a href="#liushen">六神含义</a>
+      <a href="#cta">下载</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>让小六壬更具仪式感</h1>
+      <p class="lead">呼吸圆形、渐变背景、弹性动效和触觉反馈，将传统占卜转换成现代感十足的沉浸体验。支持时间起卦与随机取数，六位结果清晰呈现。</p>
+      <div class="cta">
+        <a class="btn primary" href="#cta">即将上线 · App Store</a>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="phone-content">
+        <div class="breathe" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="section">
+    <h2>功能亮点</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="pill">视觉与动效</div>
+        <strong>渐变舞台 · 呼吸光晕</strong>
+        <ul class="list">
+          <li>橙粉与青绿渐变随状态变化</li>
+          <li>呼吸圆与白色光晕营造仪式感</li>
+          <li>长按 3 秒的平滑扩展动效</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="pill">起卦体验</div>
+        <strong>弹性跳动 · 一键重置</strong>
+        <ul class="list">
+          <li>六位结果弹跳呈现：大安、留连、速喜、赤口、小吉、空亡</li>
+          <li>脉动圆形与渐入文字展示结果</li>
+          <li>点击结果圆形可立即重新开始</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="pill">算法</div>
+        <strong>时间起卦 / 随机取数</strong>
+        <ul class="list">
+          <li>基于松手时辰或 1-1000 随机数起课</li>
+          <li>映射六位结果并展示现代化释义</li>
+          <li>触觉反馈同步关键节点</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="flow" class="section">
+    <h2>起卦流程</h2>
+    <div class="timeline">
+      <div class="timeline-item"><strong>1. 静心</strong> · 按住呼吸圆 3 秒，摒弃杂念</div>
+      <div class="timeline-item"><strong>2. 选择</strong> · 左滑“随机取数”，右滑“当前时辰”</div>
+      <div class="timeline-item"><strong>3. 跳动</strong> · 六位弹跳动画呈现抽取过程</div>
+      <div class="timeline-item"><strong>4. 解读</strong> · 结果含义渐入显示，点击圆形可再次占卜</div>
+    </div>
+  </section>
+
+  <section id="liushen" class="section">
+    <h2>小六壬六神含义解读</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="pill">大安</div>
+        <strong>平稳守成 · 贵人护持</strong>
+        <ul class="list">
+          <li>关键词：稳固、积累、按部就班</li>
+          <li>建议：把握基础建设与长线规划，宜守不宜躁</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="pill">留连</div>
+        <strong>反复拖延 · 需耐心</strong>
+        <ul class="list">
+          <li>关键词：牵挂、滞后、等待</li>
+          <li>建议：先排除干扰、理清流程，再推进关键事项</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="pill">速喜</div>
+        <strong>喜讯来临 · 快速达成</strong>
+        <ul class="list">
+          <li>关键词：捷报、机遇、行动力</li>
+          <li>建议：果断执行，及时收束成果，避免过度冒进</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="pill">赤口</div>
+        <strong>口舌是非 · 谨言慎行</strong>
+        <ul class="list">
+          <li>关键词：争执、火气、分歧</li>
+          <li>建议：沟通放缓、重复确认，必要时先冷处理</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="pill">小吉</div>
+        <strong>缓步上扬 · 积小成多</strong>
+        <ul class="list">
+          <li>关键词：渐进、细水长流、稳健</li>
+          <li>建议：持续堆叠小成果，注重节奏与品质</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="pill">空亡</div>
+        <strong>暂缓观望 · 重新整顿</strong>
+        <ul class="list">
+          <li>关键词：停滞、分散、缺口</li>
+          <li>建议：减少大动作，先补充资源或准备替代方案</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="cta" class="section">
+    <div class="card" style="text-align:center; padding:28px;">
+      <h2>即将上线 · 敬请期待</h2>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 玲珑小六壬 · Made with SwiftUI · 让传统占卜在数字时代焕发新生
+  </footer>
+</body>
+</html>
